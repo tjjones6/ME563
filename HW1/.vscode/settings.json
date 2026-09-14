@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/me563_hw1_JonesTyler.aux": true,
+        "**/me563_hw1_JonesTyler.log": true,
+        "**/me563_hw1_JonesTyler.gz": true,
+        "**/me563_hw1_JonesTyler.out": true
+    }
+}
