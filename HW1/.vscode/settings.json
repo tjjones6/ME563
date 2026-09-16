@@ -9,5 +9,25 @@
         "**/me563_hw1_JonesTyler.log": true,
         "**/me563_hw1_JonesTyler.gz": true,
         "**/me563_hw1_JonesTyler.out": true
-    }
+    },
+    "latex-workshop.latex.tools": [
+        {
+            "name": "tectonic",
+            "command": "tectonic",
+            "args": [
+                "--synctex",
+                "--keep-logs",
+                "--keep-intermediates",
+                "%DOC%.tex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "tectonic",
+            "tools": [
+                "tectonic"
+            ]
+        }
+    ]
 }

@@ -1,10 +1,11 @@
 \documentclass[12pt]{article}
 \usepackage[margin=1in]{geometry}
-\usepackage{amsmath, amssymb, bm}
+\usepackage{amsmath, amssymb, amsthm, bm}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{booktabs}
 
 % --- Header / Footer Setup ---
 \pagestyle{fancy}
@@ -20,42 +21,71 @@
 \begin{document}
 
 \section*{Problem 1}
-\textbf{Consider a pump designed for incompressible liquids. The pump is characterized by impeller diameter $d$ and spins at constant angular velocity $\Omega$. Liquid of density $\rho$ enters the pump at pressure $P_1$ and discharges at pressure $P_2$. Neglecting viscosity, perform a dimensional analysis relating the nondimensional pressure rise across the pump to the other variables, plot the given data in nondimensional form, and comment on whether the analysis identified the correct nondimensional relationship.}
+\textbf{Consider a pump designed for incompressible liquids shown in the figure below. The size of the pump is characterized by the impeller diameter ($d$); it is assumed that all other dimensions of the pump scale with this single length scale parameter. A motor is connected to the pump that spins the impeller at a constant angular velocity ($\Omega$). In the test setup shown in the figure, the pump pulls in liquid of density $\rho$ from the reservoir at pressure $P_1$, and the liquid discharges at the pump exit at pressure $P_2$. A valve is used to adjust backpressure on the pump to simulate different flow resistances.}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{../figures/me563_hw1_p1.png}
+    \includegraphics[width=0.75\textwidth]{../figures/me563_hw1_p1.png}
     \label{fig:pump_schematic}
 \end{figure}
 
-\subsection*{Part (a)}
-\textbf{Perform dimensional analysis to determine the nondimensional relation between nondimensional pressure rise across the pump and the other variables.}
+\begin{table}[H]
+    \centering
+    \caption{Pump head ($H = \Delta P/(\rho g)$) generated as a function of flow rate ($Q$) at different pump speeds.}
+    \label{tab:pump_data}
+    \begin{tabular}{cc|cc|cc}
+        \toprule
+        \multicolumn{2}{c}{Speed = 1000 rpm} & \multicolumn{2}{c}{Speed = 1475 rpm} & \multicolumn{2}{c}{Speed = 1990 rpm} \\
+        Flowrate [gpm] & Head [ft] & Flowrate [gpm] & Head [ft] & Flowrate [gpm] & Head [ft] \\
+        \midrule
+        0.0   & 30.4 & 0.0   & 64.7 & 0.0   & 113.4 \\
+        23.5  & 29.7 & 12.6  & 63.6 & 9.3   & 113.1 \\
+        38.7  & 29.0 & 33.8  & 62.4 & 22.7  & 111.0 \\
+        51.0  & 28.6 & 65.1  & 60.3 & 36.5  & 110.9 \\
+        74.8  & 27.0 & 96.4  & 57.3 & 59.9  & 110.1 \\
+        87.8  & 25.2 & 115.8 & 56.0 & 81.9  & 109.0 \\
+        101.2 & 24.3 & 139.9 & 53.8 & 107.5 & 105.0 \\
+        120.6 & 22.8 & 149.6 & 54.2 & 126.9 & 105.2 \\
+              &      & 176.8 & 49.6 & 151.9 & 101.8 \\
+              &      & 188.0 & 47.2 & 173.4 & 100.1 \\
+              &      &       &      & 189.1 & 98.3  \\
+              &      &       &      & 208.1 & 95.9  \\
+              &      &       &      & 226.6 & 93.5  \\
+              &      &       &      & 240.0 & 90.6  \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-Let $\Delta P = P_2 - P_1$ denote the pressure rise across the pump. Neglecting viscosity, we assume
+\subsection*{Part (a)}
+\textbf{Perform dimensional analysis following the steps presented in class to determine the non-dimensional relation between nondimensional pressure rise across the pump and the other variables. You can assume that the viscosity of the liquid can be neglected.}
+
+Let $\Delta P = P_2 - P_1$ be the pressure rise across the pump. Neglecting viscosity, we have:
 \begin{equation*}
     \Delta P = f(\rho, Q, \Omega, d)
 \end{equation*}
 The fundamental dimensions of the variables are:
-\begin{itemize}[noitemsep]
-    \item $[\Delta P] = M L^{-1} T^{-2}$
-    \item $[\rho] = M L^{-3}$
-    \item $[Q] = L^3 T^{-1}$
-    \item $[\Omega] = T^{-1}$
-    \item $[d] = L$
-\end{itemize}
+\begin{equation*}
+    \begin{array}{c|ccccc}
+        & \Delta P & \rho & Q & \Omega & d \\
+        \hline
+        M & 1 & 1 & 0 & 0 & 0 \\
+        L & -1 & -3 & 3 & 0 & 1 \\
+        \tau & -2 & 0 & -1 & -1 & 0
+    \end{array}
+\end{equation*}
 
-With $N = 5$ variables and 3 fundamental dimensions ($M, L, T$), the dimensional matrix has rank $R = 3$, giving $N - R = 2$ dimensionless groups. Choosing $\rho, \Omega, d$ as repeating variables:
+With $N = 5$ variables and 3 fundamental dimensions ($M, L, \tau$), the dimensional matrix has rank $R = 3$, giving $N - R = 2$ dimensionless groups. Choosing $\rho, \Omega, d$ as repeating variables:
 
 For $\Pi_1$, containing $\Delta P$:
 \begin{align*}
     \Pi_1 &= \Delta P\, \rho^a \Omega^b d^c \\
-    M^0 L^0 T^0 &= (M L^{-1} T^{-2})(M L^{-3})^a (T^{-1})^b (L)^c
+    M^0 L^0 \tau^0 &= (M L^{-1} \tau^{-2})(M L^{-3})^a (\tau^{-1})^b (L)^c
 \end{align*}
 Matching exponents:
 \begin{align*}
-    M:&\ 1 + a = 0 \implies a = -1 \\
-    L:&\ -1 - 3a + c = 0 \implies c = -2 \\
-    T:&\ -2 - b = 0 \implies b = -2
+    M:&\ 1 + a = 0 \Rightarrow a = -1 \\
+    L:&\ -1 - 3a + c = 0 \Rightarrow c = -2 \\
+    \tau:&\ -2 - b = 0 \Rightarrow b = -2
 \end{align*}
 \begin{equation}
     \Pi_1 = \Delta P\, \rho^{-1} \Omega^{-2} d^{-2} = \frac{\Delta P}{\rho \Omega^2 d^2}
@@ -63,9 +93,10 @@ Matching exponents:
 
 For $\Pi_2$, containing $Q$:
 \begin{align*}
+    \Pi_2 &= Q\, \rho^a \Omega^b d^c \\
     M:&\ a = 0 \\
-    L:&\ 3 - 3a + c = 0 \implies c = -3 \\
-    T:&\ -1 - b = 0 \implies b = -1
+    L:&\ 3 - 3a + c = 0 \Rightarrow c = -3 \\
+    \tau:&\ -1 - b = 0 \Rightarrow b = -1
 \end{align*}
 \begin{equation}
     \Pi_2 = Q\, \Omega^{-1} d^{-3} = \frac{Q}{\Omega d^3}
@@ -77,14 +108,24 @@ By the Buckingham Pi theorem, $\Pi_1 = f(\Pi_2)$:
 \end{equation}
 Defining the pump head as $H \equiv \Delta P / (\rho g)$, this becomes
 \begin{equation}
+    \boxed{
     \frac{gH}{\Omega^2 d^2} = f\left(\frac{Q}{\Omega d^3}\right)
+    }
 \end{equation}
-i.e. the head coefficient $\psi = gH/(\Omega^2 d^2)$ is a function of the flow coefficient $\phi = Q/(\Omega d^3)$.
+i.e. the head coefficient $\psi = gH/(\Omega^2 d^2)$ is a function of the flow coefficient 
+$\phi = Q/(\Omega d^3)$. \qed
 
 \subsection*{Part (b)}
-\textbf{Plot the data in the table in non-dimensional form using the non-dimensional variables determined in part (a).}
+\textbf{Plot the data in the table above in non-dimensional form using the non-dimensional variables determined in your analysis.}
 
-The flow rate and head data at each of the three pump speeds (1000, 1475, and 1990 rpm) were converted to SI units (gpm $\to$ m$^3$/s, ft $\to$ m, rpm $\to$ rad/s) and combined with $g = 9.81 \text{ m/s}^2$ to compute $\phi = Q/(\Omega d^3)$ and $\psi = gH/(\Omega^2 d^2)$ for every data point. The impeller diameter $d$ is not given in the problem; since the same physical pump ($d = \text{const}$) is used at all three speeds, an arbitrary but consistent value of $d$ only rescales both axes uniformly and does not affect whether the three speed curves collapse onto a single curve, so $d = 1$ was used as a placeholder. The resulting nondimensional performance curves are shown in Figure~\ref{fig:pump_nondim}.
+The flow rate and head data at each of the three pump speeds (1000, 1475, and 1990 rpm) 
+were converted to SI units (gpm $\to$ m$^3$/s, ft $\to$ m, rpm $\to$ rad/s) and combined with 
+$g = 9.81 \text{ m/s}^2$ to compute $\phi = Q/(\Omega d^3)$ and $\psi = gH/(\Omega^2 d^2)$. 
+The impeller diameter $d$ is not given in the problem; since the same physical pump 
+($d = \text{const}$) is used at all three speeds, an arbitrary but consistent value of $d$ 
+only rescales both axes uniformly and does not affect whether the three speed curves 
+collapse onto a single curve, so $d = 1$ was used as a placeholder value. The resulting 
+nondimensional performance curves are shown in Figure~\ref{fig:pump_nondim}
 
 \begin{figure}[H]
     \centering
@@ -96,7 +137,16 @@ The flow rate and head data at each of the three pump speeds (1000, 1475, and 19
 \subsection*{Part (c)}
 \textbf{Does your analysis appear to have identified the correct non-dimensional relationship? Why?}
 
-Largely, yes. The three speed curves collapse quite closely onto a single curve $\psi = f(\phi)$ across most of the flow range, especially at moderate-to-high flow coefficients, which confirms that $\phi$ and $\psi$ are the dominant governing nondimensional groups for this pump. There is a small, systematic spread between the curves near shutoff (small $\phi$), where $\psi$ decreases slightly with increasing speed rather than collapsing exactly. This residual discrepancy is expected because part (a) explicitly neglected viscosity; in the real pump, viscous and internal leakage losses (captured by a Reynolds number $\text{Re} = \rho \Omega d^2/\mu$, which was assumed to be sufficiently large/negligible) are not perfectly self-similar across different speeds, since Reynolds number increases with $\Omega$. So the inviscid analysis captures the correct primary relationship, but the small imperfection in curve collapse reflects the secondary effect of viscosity that the analysis intentionally excluded.
+Largely, yes. The three speed curves converge closely onto a single curve 
+$\psi = f(\phi)$ across most of the flow range, namely at moderate-to-high flow coefficients, 
+which means that $\phi$ and $\psi$ are the dominant governing nondimensional groups for this 
+pump. There is a small systematic spread between the curves near shutoff (small $\phi$), where 
+$\psi$ decreases slightly with increasing speed rather than collapsing exactly. This residual is 
+expected because part (a) neglected viscosity; whereas in the real physical pump, viscous and 
+internal losses (captured by a Reynolds number $\text{Re} = \rho \Omega d^2/\mu$ which was 
+assumed to be sufficiently negligible) are not perfectly similar across different speeds, since 
+Reynolds number increases with $\Omega$. So our inviscid analysis captures the correct 
+primary relationship. \qed
 
 \newpage
 
@@ -106,90 +156,126 @@ Largely, yes. The three speed curves collapse quite closely onto a single curve 
 \subsection*{Part (a)}
 \textbf{Using dimensional analysis, determine how $\epsilon$ must depend on $\rho, T,$ and $m$. In your formulation use $k_B =$ Boltzmann's constant, $h =$ Planck's constant, and $c =$ speed of light to include possible quantum and relativistic effects.}
 
-First, we establish the fundamental dimensions for the variables:
-\begin{itemize}[noitemsep]
-    \item $[\epsilon] = M L^{-1} T^{-2}$
-    \item $[m] = M$
-    \item $[k_B] = M L^2 T^{-2} \Theta^{-1}$
-    \item $[h] = M L^2 T^{-1}$
-    \item $[c] = L T^{-1}$
-    \item $[\rho] = M L^{-3}$
-    \item $[T] = \Theta$
-\end{itemize}
+We assume $\epsilon = f(\rho, T, m, k_B, h, c)$. The fundamental dimensions of the variables are:
+\begin{equation*}
+    \begin{array}{c|ccccccc}
+        & \epsilon & \rho & T & m & k_B & h & c \\
+        \hline
+        M & 1 & 1 & 0 & 1 & 1 & 1 & 0 \\
+        L & -1 & -3 & 0 & 0 & 2 & 2 & 1 \\
+        \tau & -2 & 0 & 0 & 0 & -2 & -1 & -1 \\
+        T & 0 & 0 & 1 & 0 & -1 & 0 & 0
+    \end{array}
+\end{equation*}
 
-By choosing $m, k_B, h,$ and $c$ as repeating variables, we construct our three dimensionless groups ($\Pi_1, \Pi_2, \Pi_3$). 
+With $N = 7$ variables and 4 fundamental dimensions ($M, L, \tau, T$), the dimensional matrix has rank $R = 4$, giving $N - R = 3$ dimensionless groups. Choosing $m, k_B, h,$ and $c$ as repeating variables:
 
 For $\Pi_1$, containing $\epsilon$:
 \begin{align*}
-    \Pi_1 &= \epsilon m^a k_B^b h^c c^d \\
-    M^0 L^0 T^0 \Theta^0 &= (M L^{-1} T^{-2})(M)^a (M L^2 T^{-2} \Theta^{-1})^b (M L^2 T^{-1})^c (L T^{-1})^d
+    \Pi_1 &= \epsilon\, m^a k_B^b h^c c^d \\
+    M^0 L^0 \tau^0 T^0 &= (M L^{-1} \tau^{-2})(M)^a (M L^2 \tau^{-2} T^{-1})^b (M L^2 \tau^{-1})^c (L \tau^{-1})^d
 \end{align*}
-Solving the system of linear equations for the exponents yields $a = -4, b = 0, c = 3, d = -5$. Thus:
+Matching exponents:
+\begin{align*}
+    M:&\ 1 + a + b + c = 0 \\
+    L:&\ -1 + 2b + 2c + d = 0 \\
+    \tau:&\ -2 -2b - c - d = 0 \\
+    T:&\ -b = 0
+\end{align*}
+Solving this system gives $a = -4, b = 0, c = 3, d = -5$. Thus:
 \begin{equation}
-    \Pi_1 = \frac{\epsilon h^3}{m^4 c^5}
+    \Pi_1 = \epsilon\, m^{-4} h^3 c^{-5} = \frac{\epsilon h^3}{m^4 c^5}
 \end{equation}
 
-For $\Pi_2$, containing $\rho$:
+For $\Pi_2$, containing $\rho$, the identical procedure gives $a = -4, b = 0, c = 3, d = -3$:
 \begin{equation}
-    \Pi_2 = \rho m^{-4} h^3 c^{-3} = \frac{\rho h^3}{m^4 c^3}
+    \Pi_2 = \rho\, m^{-4} h^3 c^{-3} = \frac{\rho h^3}{m^4 c^3}
 \end{equation}
 
-For $\Pi_3$, containing $T$:
+For $\Pi_3$, containing $T$, the identical procedure gives $a = -1, b = 1, c = 0, d = -2$:
 \begin{equation}
-    \Pi_3 = T m^{-1} k_B^1 h^0 c^{-2} = \frac{k_B T}{m c^2}
+    \Pi_3 = T\, m^{-1} k_B\, c^{-2} = \frac{k_B T}{m c^2}
 \end{equation}
 
-By the Buckingham Pi Theorem, $\Pi_1 = \mathcal{F}(\Pi_2, \Pi_3)$. Rearranging for $\epsilon$ gives:
+By the Buckingham Pi Theorem, $\Pi_1 = f(\Pi_2, \Pi_3)$. Rearranging for $\epsilon$ gives:
 \begin{equation}
-    \epsilon = \frac{m^4 c^5}{h^3} \mathcal{F}\left(\frac{\rho h^3}{m^4 c^3}, \frac{k_B T}{m c^2}\right)
+    \boxed{
+    \epsilon = \frac{m^4 c^5}{h^3} f\left(\frac{\rho h^3}{m^4 c^3}, \frac{k_B T}{m c^2}\right)
+    }
 \end{equation}
 
 \subsection*{Part (b)}
 \textbf{Consider the limit of slow moving particles without quantum effects by requiring $c$ and $h$ to drop out of your dimensionless formulation. How does $\epsilon$ depend on $\rho$ and $T$? What type of gas follows this thermodynamic law?}
 
-Assume a power-law form for the arbitrary function, $\mathcal{F}(\Pi_2, \Pi_3) = \gamma (\Pi_2)^\alpha (\Pi_3)^\beta$. Expanding this into the relation for $\epsilon$:
+Assume a power-law form for the arbitrary function, $f(\Pi_2, \Pi_3) = \gamma\, (\Pi_2)^\alpha (\Pi_3)^\beta$, where $\gamma \in \mathbb{R}$. Expanding this into the relation for $\epsilon$:
 \begin{equation*}
-    \epsilon = \gamma \rho^\alpha T^\beta k_B^\beta m^{(4 - 4\alpha - \beta)} h^{(3\alpha - 3)} c^{(5 - 3\alpha - 2\beta)}
+    \epsilon = \gamma\, \frac{m^4 c^5}{h^3}\left(\frac{\rho h^3}{m^4 c^3}\right)^\alpha \left(\frac{k_B T}{m c^2}\right)^\beta = \gamma\, \rho^\alpha T^\beta k_B^\beta\, m^{(4 - 4\alpha - \beta)} h^{(3\alpha - 3)} c^{(5 - 3\alpha - 2\beta)}
 \end{equation*}
 To ensure $h$ and $c$ drop out, their exponents must equal zero:
 \begin{align*}
-    3\alpha - 3 &= 0 \implies \alpha = 1 \\
-    5 - 3\alpha - 2\beta &= 0 \implies \beta = 1
+    h:&\ 3\alpha - 3 = 0 \Rightarrow \alpha = 1 \\
+    c:&\ 5 - 3\alpha - 2\beta = 0 \Rightarrow \beta = 1
 \end{align*}
-Substituting $\alpha = 1$ and $\beta = 1$ back into the expression yields:
+Substituting $\alpha = 1$ and $\beta = 1$ back into the expression gives:
 \begin{equation}
-    \epsilon = \gamma \frac{\rho k_B T}{m}
+    \boxed{
+    \epsilon = \gamma\, \frac{\rho k_B T}{m}
+    }
 \end{equation}
-The internal energy per unit volume depends linearly on density and temperature. This follows the thermodynamic law for a \textbf{classical ideal gas}.
+The internal energy per unit volume depends linearly on density and temperature. This follows 
+the thermodynamic law for an \textbf{ideal gas} (ideal gas law). \qed
 
 \subsection*{Part (c)}
 \textbf{Consider the limit of massless particles (i.e. photons) by requiring $m$ and $\rho$ to drop out of your dimensionless formulation of part a). How does $\epsilon$ depend on $T$ in this case? What is the name of this radiation law?}
 
-Returning to the expanded power-law equation, we now require the exponents of $m$ and $\rho$ to be zero:
+By the expanded power-law equation, we require the exponents of $m$ and $\rho$ to be zero:
 \begin{align*}
-    \alpha &= 0 \\
-    4 - 4\alpha - \beta &= 0 \implies \beta = 4
+    \rho:&\ \alpha = 0 \\
+    m:&\ 4 - 4\alpha - \beta = 0 \Rightarrow \beta = 4
 \end{align*}
 Substituting $\alpha = 0$ and $\beta = 4$ back into the expression:
 \begin{equation}
-    \epsilon = \gamma \frac{k_B^4 T^4}{h^3 c^3}
+    \boxed{
+    \epsilon = \gamma\, \frac{k_B^4 T^4}{h^3 c^3}
+    }
 \end{equation}
-The internal energy per unit volume is proportional to $T^4$. This is known as the \textbf{Stefan-Boltzmann Law}.
+The internal energy per unit volume is proportional to $T^4$. This is the 
+\textbf{Stefan-Boltzmann Law}. \qed
 
 \newpage
 
 \section*{Problem 3}
-\textbf{The vertical motion of a ship in water is governed by the $z$-component of the Navier-Stokes equation. The flow velocity far from the ship is given by $U$ and the length of the ship at the waterline is $l$.}
+\textbf{The vertical motion of a ship in water is governed by the $z$-component of the Navier--Stokes equation:}
+\begin{equation*}
+    \pd{w}{t} + u\pd{w}{x} + v\pd{w}{y} + w\pd{w}{z} = -\frac{1}{\rho}\pd{p}{z} - g + \frac{\mu}{\rho}\left(\frac{\partial^2 w}{\partial x^2} + \frac{\partial^2 w}{\partial y^2} + \frac{\partial^2 w}{\partial z^2}\right)
+\end{equation*}
+\textbf{where $u, v, w$ are the $x$, $y$, and $z$ velocities respectively, and all other variables have their normal meanings. The flow velocity far from the ship is given by $U$ and the length of the ship at the waterline is $l$.}
 
 \subsection*{Part (a)}
-\textbf{Non-dimensionalize the governing equation, the $z$-component of Navier-Stokes.}
+\textbf{Non-dimensionalize the governing equation, the $z$-component of Navier--Stokes.}
 
 We define characteristic scales to normalize the variables:
-$z^* = \frac{z}{l}, \quad x^* = \frac{x}{l}, \quad y^* = \frac{y}{l}, \quad w^* = \frac{w}{U}, \quad u^* = \frac{u}{U}, \quad v^* = \frac{v}{U}, \quad t^* = \frac{tU}{l}, \quad p^* = \frac{p}{\rho U^2}$
-
-Substituting these into the governing equation and dividing by the convective acceleration term ($\frac{U^2}{l}$) yields:
+\begin{equation*}
+    x^* = \frac{x}{l}, \quad y^* = \frac{y}{l}, \quad z^* = \frac{z}{l}, \quad u^* = \frac{u}{U}, \quad v^* = \frac{v}{U}, \quad w^* = \frac{w}{U}, \quad t^* = \frac{tU}{l}, \quad p^* = \frac{p}{\rho U^2}
+\end{equation*}
+Substituting these scales into each term of the governing equation (with $\nu = \mu/\rho$ the kinematic viscosity):
+\begin{align*}
+    \partial_t w &= \frac{U^2}{l}\,\partial_{t^*} w^*, &
+    u\,\partial_x w &= \frac{U^2}{l}\,u^*\,\partial_{x^*} w^*, \\
+    v\,\partial_y w &= \frac{U^2}{l}\,v^*\,\partial_{y^*} w^*, &
+    w\,\partial_z w &= \frac{U^2}{l}\,w^*\,\partial_{z^*} w^*, \\
+    \frac{1}{\rho}\,\partial_z p &= \frac{U^2}{l}\,\partial_{z^*} p^*, &
+    \frac{\mu}{\rho}\nabla^2 w &= \frac{\nu U}{l^2}\nabla^{*2} w^*
+\end{align*}
+Substituting these into the governing equation gives:
+\begin{equation*}
+    \frac{U^2}{l}\left(\partial_{t^*} w^* + u^*\partial_{x^*} w^* + v^*\partial_{y^*} w^* + w^*\partial_{z^*} w^*\right) = -\frac{U^2}{l}\partial_{z^*} p^* - g + \frac{\nu U}{l^2}\nabla^{*2}w^*
+\end{equation*}
+Dividing through by the convective acceleration term ($U^2/l$) gives:
 \begin{equation}
-    \pd{w^*}{t^*} + u^*\pd{w^*}{x^*} + v^*\pd{w^*}{y^*} + w^*\pd{w^*}{z^*} = -\pd{p^*}{z^*} - \frac{g l}{U^2} + \frac{\mu}{\rho U l} \nabla^{*2} w^*
+    \boxed{
+    \partial_{t^*} w^* + u^*\partial_{x^*} w^* + v^*\partial_{y^*} w^* + w^*\partial_{z^*} w^* = -\partial_{z^*} p^* - \frac{g l}{U^2} + \frac{\mu}{\rho U l} \nabla^{*2} w^*
+    }
 \end{equation}
 
 \subsection*{Part (b)}
@@ -197,24 +283,71 @@ Substituting these into the governing equation and dividing by the convective ac
 
 The resulting common non-dimensional parameters are:
 \begin{itemize}
-    \item Inverse Froude Number squared: $\frac{1}{Fr^2} = \frac{g l}{U^2}$
-    \item Inverse Reynolds Number: $\frac{1}{Re} = \frac{\mu}{\rho U l}$
+    \item Inverse Froude Number squared: $\dfrac{1}{Fr^2} = \dfrac{g l}{U^2}$
+    \item Inverse Reynolds Number: $\dfrac{1}{Re} = \dfrac{\mu}{\rho U l}$
 \end{itemize}
 
 \subsection*{Part (c)}
 \textbf{Assume you didn't have knowledge of the governing equation but knew that the $z$-velocity, $w$, was a function of $\rho, g, \mu, U,$ and $l$. Find the non-dimensional parameters using the Buckingham PI theorem.}
 
-With 6 variables ($w, \rho, g, \mu, U, l$) and 3 fundamental dimensions ($M, L, T$), we choose $\rho, U, l$ as repeating variables to form $6 - 3 = 3$ dimensionless groups:
-\begin{align*}
-    \Pi_1 &= \frac{w}{U} \\
-    \Pi_2 &= \frac{g l}{U^2} \quad \text{(Inverse Froude Number squared)} \\
-    \Pi_3 &= \frac{\mu}{\rho U l} \quad \text{(Inverse Reynolds Number)}
-\end{align*}
-This matches the parameters found directly from the governing equation in part (b), as expected: pressure was not included among the given variables here, so no Euler-number-like group appears.
+We assume $w = f(\rho, g, \mu, U, l)$. The fundamental dimensions of the variables are:
+\begin{equation*}
+    \begin{array}{c|cccccc}
+        & w & \rho & g & \mu & U & l \\
+        \hline
+        M & 0 & 1 & 0 & 1 & 0 & 0 \\
+        L & 1 & -3 & 1 & -1 & 1 & 1 \\
+        \tau & -1 & 0 & -2 & -1 & -1 & 0
+    \end{array}
+\end{equation*}
+With 6 variables ($w, \rho, g, \mu, U, l$) and 3 fundamental dimensions ($M, L, \tau$), we choose $\rho, U, l$ as repeating variables to form $6 - 3 = 3$ dimensionless groups.
 
+For $\Pi_1$, containing $w$:
+\begin{align*}
+    \Pi_1 &= w\, \rho^a U^b l^c \\
+    M:&\ a = 0, \quad L:\ 1 - 3a + b + c = 0, \quad \tau:\ -1 - b = 0 \Rightarrow a = 0,\ b = -1,\ c = 0
+\end{align*}
+\begin{equation}
+    \Pi_1 = \frac{w}{U}
+\end{equation}
+
+For $\Pi_2$, containing $g$: solving analogously gives $a = 0,\ b = -2,\ c = 1$:
+\begin{equation}
+    \Pi_2 = \frac{g l}{U^2} \quad \text{(Inverse Froude Number squared)}
+\end{equation}
+
+For $\Pi_3$, containing $\mu$: solving analogously gives $a = -1,\ b = -1,\ c = -1$:
+\begin{equation}
+    \Pi_3 = \frac{\mu}{\rho U l} \quad \text{(Inverse Reynolds Number)}
+\end{equation}
+
+By the Buckingham Pi theorem, $\Pi_1 = f(\Pi_2, \Pi_3)$, i.e.
+\begin{equation}
+    \boxed{
+    \frac{w}{U} = f(Fr, Re) = f\left(\frac{U}{\sqrt{gl}}, \frac{\rho U l}{\mu}\right)
+    }
+\end{equation}
+This matches the parameters found directly from the governing equation in part (b), as expected: pressure was not included among the given variables here, so no Euler-number-like group appears. \qed
 \subsection*{Part (d)}
 \textbf{We wish to test a scaled model of a tanker ship at scale of 1/100 the actual size, is it practical to achieve dynamic similarity?}
 
-It is \textbf{not practical}. Achieving dynamic similarity for surface vessels requires matching both the Froude number and the Reynolds number simultaneously. Matching the Froude number requires the model velocity to scale by $\sqrt{1/100} = 1/10$ of the actual velocity. However, matching the Reynolds number in the same fluid requires the model velocity to be $100$ times the actual velocity. These scaling requirements are contradictory.
+Let subscripts $m$ and $p$ denote the model and prototype (full-scale), respectively, with $l_m/l_p = 1/100$. Dynamic similarity requires matching both the Froude number and the Reynolds number:
+\begin{equation*}
+    Fr_m = Fr_p \Rightarrow \frac{U_m}{\sqrt{g l_m}} = \frac{U_p}{\sqrt{g l_p}} \Rightarrow \frac{U_m}{U_p} = \sqrt{\frac{l_m}{l_p}} = \frac{1}{10}
+\end{equation*}
+\begin{equation*}
+    Re_m = Re_p \Rightarrow \frac{U_m l_m}{\nu_m} = \frac{U_p l_p}{\nu_p} \Rightarrow \frac{\nu_m}{\nu_p} = \left(\frac{U_m}{U_p}\right)\left(\frac{l_m}{l_p}\right) = \left(\frac{1}{10}\right)\left(\frac{1}{100}\right) = \frac{1}{1000}
+\end{equation*}
+So Froude scaling requires the model velocity to be $1/10$ of the prototype velocity, and 
+simultaneously satisfying Reynolds scaling in this case requires a model fluid with kinematic 
+viscosity $1/1000$ that of the prototype fluid. Taking 
+$\nu_p \approx 1\times10^{-6}\ \text{m}^2/\text{s}$ (water at $20^\circ$C) gives 
+$\nu_m \approx 1\times10^{-9}\ \text{m}^2/\text{s}$, roughly $1000\times$ less viscous than 
+water. No practical fluid has a kinematic viscosity anywhere near this low.
+
+It is therefore \textbf{not practical} to achieve full dynamic similarity: matching the Froude 
+number and the Reynolds number simultaneously would require a model test fluid whose kinematic 
+viscosity is unrealistically small, so the two scaling requirements cannot both be satisfied 
+with any real fluid. \qed
 
 \end{document}
