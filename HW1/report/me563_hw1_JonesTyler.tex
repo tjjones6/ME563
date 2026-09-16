@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage[xetex,hidelinks]{hyperref}
 
 % --- Header / Footer Setup ---
 \pagestyle{fancy}
@@ -125,7 +126,7 @@ The impeller diameter $d$ is not given in the problem; since the same physical p
 ($d = \text{const}$) is used at all three speeds, an arbitrary but consistent value of $d$ 
 only rescales both axes uniformly and does not affect whether the three speed curves 
 collapse onto a single curve, so $d = 1$ was used as a placeholder value. The resulting 
-nondimensional performance curves are shown in Figure~\ref{fig:pump_nondim}
+nondimensional performance curves are shown in Figure~\ref*{fig:pump_nondim}.
 
 \begin{figure}[H]
     \centering
@@ -349,5 +350,14 @@ It is therefore \textbf{not practical} to achieve full dynamic similarity: match
 number and the Reynolds number simultaneously would require a model test fluid whose kinematic 
 viscosity is unrealistically small, so the two scaling requirements cannot both be satisfied 
 with any real fluid. \qed
+
+\appendix
+\section*{Appendix: Code and Handwritten Derivations}
+
+All supporting code/derivations for this homework (dimensional analysis scripts, data processing, plotting, 
+and handwritten derivations) are available in the GitHub repository:
+\begin{center}
+    \url{https://github.com/tjjones6/ME563/tree/main/HW1}
+\end{center}
 
 \end{document}

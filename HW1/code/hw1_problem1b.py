@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 data = pd.read_excel("pump_data.xlsx")
 print(data.head())
 
+# Constants
 g = 9.81
 
 # Unit conversions to SI
