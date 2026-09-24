@@ -1,0 +1,235 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm, bm}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage[xetex,hidelinks]{hyperref}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Tyler Jones}
+\chead{ME 563: HW 2}
+\rhead{University of Wisconsin--Madison}
+\cfoot{\thepage}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ten}[1]{\overleftrightarrow{#1}}
+
+\begin{document}
+
+\section*{Problem 1}
+\textbf{Determine which of the following expressions are allowed in index notation, if they are not allowed state why ($a$, $b$, $c$, $d$, and $e$ are arbitrary quantities) (10 points).}
+
+\begin{enumerate}[label=(\alph*)]
+    \item $a = b_ic_{ij}d_j$: allowed. $i$ and $j$ each appear twice and are summed, leaving no free index, consistent with the scalar $a$.
+
+    \item $a = b_ic_i + d_j$: not allowed. $b_ic_i$ has no free index while $d_j$ carries free index $j$; the two terms disagree.
+
+    \item $a_i = \delta_{ij}b_i + c_i$: not allowed. $\delta_{ij}b_i = b_j$ carries free index $j$, while $c_i$ carries free index $i$; the terms disagree.
+
+    \item $a_k = b_ic_{ki}$: allowed. $i$ is summed, $k$ is free and matches the left side.
+
+    \item $a_k = b_kc + d_ie_{ik}$: allowed. Both terms carry free index $k$, matching the left side.
+
+    \item $a_i = b_i + c_{ij}d_{ji}e_i$: not allowed. $i$ appears three times in $c_{ij}d_{ji}e_i$.
+
+    \item $a_l = \epsilon_{ijk}b_jc_k$: not allowed. $j$ and $k$ are summed, leaving free index $i$ on the right, but the left side carries free index $l$.
+
+    \item $a_{ij} = b_{ji}$: allowed. $i$ and $j$ are free on both sides.
+
+    \item $a_{ij} = b_ic_j + e_{jk}$: not allowed. The first term has free indices $\{i,j\}$, the second has $\{j,k\}$.
+
+    \item $a_{kl} = b_ic_{ki}d_l + e_{ki}$: not allowed. $i$ is summed in the first term, leaving free indices $\{k,l\}$; $e_{ki}$ carries free indices $\{k,i\}$, which do not match.
+\end{enumerate}
+
+\newpage
+
+\section*{Problem 2}
+\textbf{For three spatial dimensions, rewrite the following expressions in index notation and evaluate or simplify them using the values or parameters given, and the definitions of $\delta_{ij}$ and $\epsilon_{ijk}$ wherever possible. In parts b) through e), $\vec x$ is the position vector, with components $x_i$.}
+
+\subsection*{Part a)}
+\textbf{$\vec b \cdot \vec c$, where $\vec b = (1,4,17)$ and $\vec c = (-4,-3,1)$.}
+
+$\vec b \cdot \vec c = b_ic_i$:
+\begin{equation}
+    b_ic_i = (1)(-4) + (4)(-3) + (17)(1) = -4 - 12 + 17 = \boxed{1}
+\end{equation}
+
+\subsection*{Part b)}
+\textbf{$\left(\vec u \cdot \vec\nabla\right) \vec x$, where $\vec u = $ a vector with components $u_i$.}
+
+The $j$-th component is $u_i\partial_i x_j$, and $\partial x_j/\partial x_i = \delta_{ij}$. Thus
+\begin{equation}
+    \left[(\vec u \cdot \vec\nabla)\vec x\right]_j = u_i\,\pd{x_j}{x_i} = u_i\delta_{ij} = u_j
+\end{equation}
+so
+\begin{equation}
+    \boxed{(\vec u \cdot \vec\nabla)\vec x = \vec u}
+\end{equation}
+
+\subsection*{Part c)}
+\textbf{$\vec\nabla \phi$, where $\phi = \vec h \cdot \vec x$ and $\vec h$ is a constant vector with components $h_i$.}
+
+Writing $\phi = h_ix_i$:
+\begin{equation}
+    (\vec\nabla\phi)_j = \pd{\phi}{x_j} = \pd{}{x_j}(h_ix_i) = h_i\pd{x_i}{x_j} = h_i\delta_{ij} = h_j
+\end{equation}
+so
+\begin{equation}
+    \boxed{\vec\nabla\phi = \vec h}
+\end{equation}
+
+\subsection*{Part d)}
+\textbf{$\vec\nabla \times \vec u$, where $\vec u = \vec\Omega \times \vec x$ and $\vec\Omega$ is a constant vector with components $\Omega_i$.}
+
+Write $u_p = \epsilon_{pqr}\Omega_qx_r$. Then
+\begin{align*}
+    (\vec\nabla\times\vec u)_i &= \epsilon_{ijk}\partial_ju_k = \epsilon_{ijk}\partial_j\left(\epsilon_{klm}\Omega_lx_m\right) = \epsilon_{ijk}\epsilon_{klm}\Omega_l\pd{x_m}{x_j} = \epsilon_{ijk}\epsilon_{klm}\Omega_l\delta_{jm}
+\end{align*}
+Setting $m = j$:
+\begin{equation*}
+    (\vec\nabla\times\vec u)_i = \epsilon_{ijk}\epsilon_{klj}\Omega_l = \epsilon_{kij}\epsilon_{klj}\Omega_l
+\end{equation*}
+using $\epsilon_{ijk} = \epsilon_{kij}$. Applying $\epsilon_{kij}\epsilon_{klj} = \delta_{il}\delta_{jj} - \delta_{ij}\delta_{jl}$ and summing over $j$ ($\delta_{jj} = 3$, $\delta_{ij}\delta_{jl} = \delta_{il}$):
+\begin{equation*}
+    (\vec\nabla\times\vec u)_i = \Omega_l\left(3\delta_{il} - \delta_{il}\right) = 2\delta_{il}\Omega_l = 2\Omega_i
+\end{equation*}
+so
+\begin{equation}
+    \boxed{\vec\nabla\times\vec u = 2\vec\Omega}
+\end{equation}
+
+\subsection*{Part e)}
+\textbf{$\ten C \cdot \vec x$, where}
+\begin{equation*}
+    \ten C = \left\{ \begin{array}{ccc} 1 & 2 & 3 \\ 0 & 1 & 2 \\ 0 & 0 & 1 \end{array} \right\}
+\end{equation*}
+
+$(\ten C \cdot \vec x)_i = C_{ij}x_j$:
+\begin{equation}
+    \boxed{
+    \ten C \cdot \vec x =
+    \begin{pmatrix}
+        x_1 + 2x_2 + 3x_3 \\
+        x_2 + 2x_3 \\
+        x_3
+    \end{pmatrix}
+    }
+\end{equation}
+
+\newpage
+
+\section*{Problem 3}
+\textbf{Prove that the following expression is true using Cartesian index notation without the use of vector identities (if you want to use a vector identity you must first show it is true using index notation).}
+\begin{equation*}
+    \vec\nabla \times \left(\vec\nabla \times \vec F\right) = \vec\nabla\left(\vec\nabla \cdot \vec F\right) - \nabla^2 \vec F
+\end{equation*}
+
+Using the cyclic property of the permutation symbol from MATH 321 and lecture, $\epsilon_{ijk} = \epsilon_{kij}$, along with the $\epsilon$-$\delta$ identity
+\begin{equation}
+    \epsilon_{kij}\epsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}, \label{eq:epsdelta}
+\end{equation}
+the curl of the curl becomes
+\begin{align*}
+    \left[\vec\nabla\times\left(\vec\nabla\times\vec F\right)\right]_i
+    &= \epsilon_{ijk}\partial_j\left(\epsilon_{klm}\partial_lF_m\right) \\
+    &= \epsilon_{ijk}\epsilon_{klm}\,\partial_j\partial_lF_m \\
+    &= \epsilon_{kij}\epsilon_{klm}\,\partial_j\partial_lF_m
+\end{align*}
+Applying this property,
+\begin{align*}
+    \left[\vec\nabla\times\left(\vec\nabla\times\vec F\right)\right]_i
+    &= \left(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}\right)\partial_j\partial_lF_m \\
+    &= \delta_{il}\delta_{jm}\,\partial_j\partial_lF_m - \delta_{im}\delta_{jl}\,\partial_j\partial_lF_m
+\end{align*}
+The first term sets $l=i$, $m=j$: $\partial_j\partial_iF_j = \partial_i\left(\partial_jF_j\right) = \partial_i\left(\vec\nabla\cdot\vec F\right)$. The second sets $m=i$, $l=j$: $\partial_j\partial_jF_i = \nabla^2F_i$. This gives
+\begin{equation*}
+    \left[\vec\nabla\times\left(\vec\nabla\times\vec F\right)\right]_i = \partial_i\left(\vec\nabla\cdot\vec F\right) - \nabla^2F_i = \left[\vec\nabla\left(\vec\nabla\cdot\vec F\right) - \nabla^2\vec F\right]_i
+\end{equation*}
+for $i = 1,2,3$, so
+\begin{equation}
+    \boxed{\vec\nabla \times \left(\vec\nabla \times \vec F\right) = \vec\nabla\left(\vec\nabla \cdot \vec F\right) - \nabla^2 \vec F}
+\end{equation}
+\qed
+
+\newpage
+
+\section*{Problem 4}
+\textbf{Prove that the following expressions are true using Cartesian index notation without the use of vector identities (if you want to use a vector identity you must first show it is true using index notation).}
+\begin{equation*}
+    \left(\vec a\times\vec b\right)\times\left(\vec c\times\vec d\right) = \left[\vec c\cdot\left(\vec d\times\vec a\right)\right]\vec b - \left[\vec c\cdot\left(\vec d\times\vec b\right)\right]\vec a
+\end{equation*}
+\begin{center}
+    \textbf{And}
+\end{center}
+\begin{equation*}
+    \left(\vec a\times\vec b\right)\times\left(\vec c\times\vec d\right) = \left[\vec a\cdot\left(\vec b\times\vec d\right)\right]\vec c - \left[\vec a\cdot\left(\vec b\times\vec c\right)\right]\vec d
+\end{equation*}
+
+Both follow from two lemmas, proved below in index notation for arbitrary vectors $\vec p, \vec q, \vec r$.
+
+\subsection*{Lemma A: $\vec p \times (\vec q \times \vec r) = \vec q(\vec p \cdot \vec r) - \vec r(\vec p \cdot \vec q)$}
+
+Using $\epsilon_{ijk} = \epsilon_{kij}$ and $\epsilon_{kij}\epsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}$ from Problem 3:
+\begin{align*}
+    \left[\vec p \times (\vec q \times \vec r)\right]_i
+    &= \epsilon_{ijk}p_j\left(\epsilon_{klm}q_lr_m\right) = \epsilon_{ijk}\epsilon_{klm}\,p_jq_lr_m = \epsilon_{kij}\epsilon_{klm}\,p_jq_lr_m \\
+    &= \left(\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}\right)p_jq_lr_m \\
+    &= \delta_{il}\delta_{jm}\,p_jq_lr_m - \delta_{im}\delta_{jl}\,p_jq_lr_m \\
+    &= q_i\left(p_jr_j\right) - r_i\left(p_jq_j\right) = q_i(\vec p\cdot\vec r) - r_i(\vec p \cdot \vec q)
+\end{align*}
+so $\vec p \times (\vec q \times \vec r) = \vec q(\vec p \cdot \vec r) - \vec r(\vec p \cdot \vec q)$. \hfill $\blacksquare$
+
+\subsection*{Lemma B: $(\vec p \times \vec q)\cdot\vec r = \vec p \cdot (\vec q \times \vec r)$}
+
+In index notation,
+\begin{equation*}
+    (\vec p \times \vec q)\cdot\vec r = \epsilon_{iab}p_aq_b r_i, \qquad \vec p \cdot (\vec q \times \vec r) = \epsilon_{iab}p_iq_ar_b
+\end{equation*}
+Renaming the dummy indices $(i,a,b)\to(b,i,a)$ in the first expression gives
+\begin{equation*}
+    \epsilon_{iab}p_aq_br_i = \epsilon_{bia}p_iq_ar_b = \epsilon_{iab}p_iq_ar_b
+\end{equation*}
+using $\epsilon_{bia}=\epsilon_{iab}$. Hence $(\vec p \times \vec q)\cdot \vec r = \vec p \cdot (\vec q \times \vec r)$. \hfill $\blacksquare$
+
+The antisymmetry of the cross product follows the same way: $(\vec q\times\vec p)_i = \epsilon_{ijk}q_jp_k$; renaming $j\leftrightarrow k$ gives $\epsilon_{ikj}q_kp_j = \epsilon_{ikj}p_jq_k = -\epsilon_{ijk}p_jq_k = -(\vec p\times\vec q)_i$. So $\vec q\times\vec p = -\vec p\times\vec q$.
+
+\subsection*{Proof of the second identity}
+
+Apply Lemma A with $\vec p = \vec a\times\vec b$, $\vec q = \vec c$, $\vec r = \vec d$:
+\begin{equation*}
+    (\vec a\times\vec b)\times(\vec c\times\vec d) = \vec c\left[(\vec a\times\vec b)\cdot\vec d\right] - \vec d\left[(\vec a\times\vec b)\cdot\vec c\right]
+\end{equation*}
+By Lemma B, $(\vec a\times\vec b)\cdot\vec d = \vec a\cdot(\vec b\times\vec d)$ and $(\vec a\times\vec b)\cdot\vec c = \vec a\cdot(\vec b\times\vec c)$. Substituting,
+\begin{equation}
+    \boxed{(\vec a\times\vec b)\times(\vec c\times\vec d) = \left[\vec a\cdot(\vec b\times\vec d)\right]\vec c - \left[\vec a\cdot(\vec b\times\vec c)\right]\vec d}
+\end{equation}
+
+\subsection*{Proof of the first identity}
+
+Apply Lemma A with $\vec p = \vec c\times\vec d$, $\vec q = \vec a$, $\vec r = \vec b$:
+\begin{equation*}
+    (\vec c\times\vec d)\times(\vec a\times\vec b) = \vec a\left[(\vec c\times\vec d)\cdot\vec b\right] - \vec b\left[(\vec c\times\vec d)\cdot\vec a\right]
+\end{equation*}
+By antisymmetry, $(\vec a\times\vec b)\times(\vec c\times\vec d) = -(\vec c\times\vec d)\times(\vec a\times\vec b)$, so
+\begin{equation*}
+    (\vec a\times\vec b)\times(\vec c\times\vec d) = \vec b\left[(\vec c\times\vec d)\cdot\vec a\right] - \vec a\left[(\vec c\times\vec d)\cdot\vec b\right]
+\end{equation*}
+By Lemma B, $(\vec c\times\vec d)\cdot\vec a = \vec c\cdot(\vec d\times\vec a)$ and $(\vec c\times\vec d)\cdot\vec b = \vec c\cdot(\vec d\times\vec b)$. Substituting,
+\begin{equation}
+    \boxed{(\vec a\times\vec b)\times(\vec c\times\vec d) = \left[\vec c\cdot(\vec d\times\vec a)\right]\vec b - \left[\vec c\cdot(\vec d\times\vec b)\right]\vec a}
+\end{equation}
+\qed
+
+\appendix
+\section*{Appendix: Code and Handwritten Derivations}
+
+All supporting derivations for this homework are available in the GitHub repository:
+\begin{center}
+    \url{https://github.com/tjjones6/ME563/tree/main/HW2}
+\end{center}
+
+\end{document}
