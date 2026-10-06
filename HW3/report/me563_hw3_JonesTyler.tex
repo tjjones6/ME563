@@ -1,0 +1,337 @@
+% ME563 - HW 3
+% Tyler Jones
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{mathpazo}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% ---- headers / footers ------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{14pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small ME 563: HW 3}
+\fancyhead[R]{\small Tyler Jones}
+\fancyfoot[C]{\small \thepage}
+
+% ---- section spacing --------------------------------------------------
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-0.6\baselineskip}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{1.6\baselineskip}{0.8\baselineskip}
+\titlespacing*{\subsection}{0pt}{1.1\baselineskip}{0.4\baselineskip}
+
+% ---- table spacing ----------------------------------------------------
+\renewcommand{\arraystretch}{1.25}
+
+% ---- shorthands -------------------------------------------------------
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+\title{\vspace{-1.5em}\textbf{ME563 HW 3}}
+\author{Tyler Jones}
+\date{Due: September 30, 2026}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+%=======================================================================
+\section*{Problem 1}
+
+\noindent\textbf{Problem statement.} The components of the mass flow vector $\rho\vec u$ are
+$\rho u_x = 4x^2y$, $\rho u_y = xyz$, and $\rho u_z = yz^2$.
+
+\subsection*{(a)}
+
+\noindent\textit{Problem statement.} Compute the net mass outflow through the closed surface formed
+by the planes, $x=0$, $x=1$, $y=0$, $y=1$, $z=0$, $z=1$.
+
+\medskip
+\noindent $\rho\vect u = \langle 4x^2y,\; xyz,\; yz^2\rangle$, $\Phi = \oint_S \rho\vect u\cdot\hat{\vect n}\,dA$:
+\begin{align*}
+x=0,\ \hat{\vect n}=-\hat{\vect e}_x:&\quad \Phi = \int_0^1\!\!\int_0^1 -4x^2y\big|_{x=0}\,dz\,dy = 0 \\
+x=1,\ \hat{\vect n}=+\hat{\vect e}_x:&\quad \Phi = \int_0^1\!\!\int_0^1 4y\,dz\,dy = 4\int_0^1 y\,dy = 2 \\
+y=0,\ \hat{\vect n}=-\hat{\vect e}_y:&\quad \Phi = \int_0^1\!\!\int_0^1 -xyz\big|_{y=0}\,dz\,dx = 0 \\
+y=1,\ \hat{\vect n}=+\hat{\vect e}_y:&\quad \Phi = \int_0^1\!\!\int_0^1 xz\,dz\,dx = \tfrac12\int_0^1 x\,dx = \tfrac14 \\
+z=0,\ \hat{\vect n}=-\hat{\vect e}_z:&\quad \Phi = \int_0^1\!\!\int_0^1 -yz^2\big|_{z=0}\,dy\,dx = 0 \\
+z=1,\ \hat{\vect n}=+\hat{\vect e}_z:&\quad \Phi = \int_0^1\!\!\int_0^1 y\,dy\,dx = \tfrac12\int_0^1 dx = \tfrac12
+\end{align*}
+\begin{equation*}
+\boxed{\oint_S \rho\vect u\cdot\hat{\vect n}\,dA = 0 + 2 + 0 + \tfrac14 + 0 + \tfrac12 = \tfrac{11}{4}}
+\end{equation*}
+
+\subsection*{(b)}
+
+\noindent\textit{Problem statement.} Compute $\vec\nabla\cdot(\rho\vec u)$ and integrate over the
+volume bounded by the surface defined in part a).
+
+\begin{equation*}
+\nabla\cdot(\rho\vect u) = \pd{}{x}(4x^2y) + \pd{}{y}(xyz) + \pd{}{z}(yz^2)
+= \boxed{8xy + xz + 2yz}
+\end{equation*}
+\begin{align*}
+\int_0^1\!\!\int_0^1\!\!\int_0^1 (8xy + xz + 2yz)\,dz\,dy\,dx
+&= \int_0^1\!\!\int_0^1 \Big(8xyz + \tfrac12 xz^2 + yz^2\Big)\Big|_{z=0}^{z=1} dy\,dx \\
+&= \int_0^1\!\!\int_0^1 \Big(8xy + \tfrac12 x + y\Big)\,dy\,dx \\
+&= \int_0^1 \Big(4xy^2 + \tfrac12 xy + \tfrac12 y^2\Big)\Big|_{y=0}^{y=1} dx
+ = \int_0^1 \Big(4x + \tfrac12 x + \tfrac12\Big)\,dx \\
+&= \Big(2x^2 + \tfrac14 x^2 + \tfrac12 x\Big)\Big|_{x=0}^{x=1}
+\end{align*}
+\begin{equation*}
+\boxed{\int_V \nabla\cdot(\rho\vect u)\,dV = \tfrac{11}{4}}
+\end{equation*}
+
+\subsection*{(c)}
+
+\noindent\textit{Problem statement.} Explain why the results in a) and b) should, or should not, be
+equal.
+
+\medskip
+\noindent They should be equal. $\rho\vect u$ is continuously differentiable on the cube $V$, so the divergence theorem applies:
+\begin{equation*}
+\int_V \nabla\cdot(\rho\vect u)\,dV = \oint_S \rho\vect u\cdot\hat{\vect n}\,dA = \tfrac{11}{4}.
+\end{equation*}
+
+%=======================================================================
+\section*{Problem 2}
+
+\noindent\textbf{Problem statement.} For the following flows find the missing velocity component
+needed for the flow to satisfy the incompressible continuity equation
+
+\medskip
+\noindent Incompressible continuity: $\nabla\cdot\vect u = \pd{u_1}{x_1} + \pd{u_2}{x_2} + \pd{u_3}{x_3} = 0$.
+In each case $f$ is an arbitrary function of the two coordinates not differentiated against.
+
+\subsection*{(a)}
+
+\noindent\textit{Problem statement.} $u_1 = x_1^2 + x_2^2 + a^2, \quad v_2 = -x_1x_2 - x_2x_3 - x_1x_3, \quad u_3 = ?$
+
+\medskip
+\noindent ($v_2$ taken as $u_2$. I think this was a typo in the problem statement.)
+\begin{gather*}
+\pd{}{x_1}\big(x_1^2+x_2^2+a^2\big) + \pd{}{x_2}\big(-x_1x_2-x_2x_3-x_1x_3\big) + \pd{u_3}{x_3} = 0 \\
+\Rightarrow\; 2x_1 - x_1 - x_3 + \pd{u_3}{x_3} = 0
+\;\Rightarrow\; \pd{u_3}{x_3} = x_3 - x_1
+\end{gather*}
+\begin{equation*}
+\int du_3 = \int (x_3 - x_1)\,dx_3
+\;\Rightarrow\;
+\boxed{u_3 = \tfrac12 x_3^2 - x_1x_3 + f(x_1,x_2)}
+\end{equation*}
+
+\subsection*{(b)}
+
+\noindent\textit{Problem statement.} $u_1 = \ln\!\big(x_2^2 + x_3^2\big), \quad u_2 = \sin\!\big(x_1^2 + x_3^2\big), \quad u_3 = ?$
+
+\begin{equation*}
+\pd{}{x_1}\Big[\ln\!\big(x_2^2+x_3^2\big)\Big] + \pd{}{x_2}\Big[\sin\!\big(x_1^2+x_3^2\big)\Big] + \pd{u_3}{x_3} = 0
+\;\Rightarrow\; 0 + 0 + \pd{u_3}{x_3} = 0
+\;\Rightarrow\;
+\boxed{u_3 = f(x_1,x_2)}
+\end{equation*}
+
+\subsection*{(c)}
+
+\noindent\textit{Problem statement.} $u_1 = ?, \quad
+u_2 = \dfrac{x_2}{\big(x_1^2+x_2^2+x_3^2\big)^{3/2}}, \quad
+u_3 = \dfrac{x_3}{\big(x_1^2+x_2^2+x_3^2\big)^{3/2}}$
+
+\medskip
+\noindent Let $r = (x_1^2+x_2^2+x_3^2)^{1/2}$, so $\partial r/\partial x_i = x_i/r$ and
+\begin{equation*}
+\pd{}{x_i}\left(\frac{x_i}{r^3}\right) = \frac{1}{r^3} - \frac{3x_i}{r^4}\frac{x_i}{r} = \frac{r^2 - 3x_i^2}{r^5}
+\quad(\text{no sum}).
+\end{equation*}
+Continuity:
+\begin{equation*}
+\pd{u_1}{x_1} + \frac{r^2 - 3x_2^2}{r^5} + \frac{r^2 - 3x_3^2}{r^5} = 0
+\;\Rightarrow\;
+\pd{u_1}{x_1} = \frac{3\big(x_2^2+x_3^2\big) - 2r^2}{r^5} = \frac{3\big(r^2 - x_1^2\big) - 2r^2}{r^5} = \frac{r^2 - 3x_1^2}{r^5}
+\end{equation*}
+which is $\partial(x_1/r^3)/\partial x_1$. Hence
+\begin{equation*}
+\int du_1 = \int \frac{r^2 - 3x_1^2}{r^5}\,dx_1
+\;\Rightarrow\;
+\boxed{u_1 = \frac{x_1}{\big(x_1^2+x_2^2+x_3^2\big)^{3/2}} + f(x_2,x_3)}
+\end{equation*}
+
+%=======================================================================
+\section*{Problem 3}
+
+\noindent\textbf{Problem statement.} Consider the velocity field $\vect u = (\alpha x/t, 0, 0)$ (in
+Cartesian), where $\alpha$ is a constant. The density of the fluid is spatially uniform, but
+time-dependent, i.e., $\rho$ is a function of $t$.
+
+\subsection*{(a)}
+
+\noindent\textit{Problem statement.} Determine the density field $\rho(t)$, given $\rho = \rho_0$ at
+$t = t_0$.
+
+\medskip
+\noindent $\vect u = \begin{bmatrix} \alpha x/t & 0 & 0\end{bmatrix}^{\top}$, $\alpha\in\mathbb{R}$, $\rho = \rho(t)$.
+Since $\nabla\rho = \vect 0$, continuity reduces to the form discussed in lecture
+\begin{equation*}
+\pd{\rho}{t} + \nabla\cdot(\rho\vect u) = 0
+\;\Rightarrow\;
+\pd{\rho}{t} + \rho\left[\pd{}{x}\left(\frac{\alpha x}{t}\right) + 0 + 0\right] = 0
+\;\Rightarrow\;
+\frac{d\rho}{dt} = -\rho\,\frac{\alpha}{t}
+\end{equation*}
+\begin{equation*}
+\int_{\rho_0}^{\rho} \frac{d\rho'}{\rho'} = -\alpha\int_{t_0}^{t}\frac{dt'}{t'}
+\;\Rightarrow\;
+\ln\frac{\rho}{\rho_0} = -\alpha\ln\frac{t}{t_0} = \ln\left(\frac{t_0}{t}\right)^{\alpha}
+\;\Rightarrow\;
+\boxed{\rho(t) = \rho_0\left(\frac{t_0}{t}\right)^{\alpha}}
+\end{equation*}
+
+\subsection*{(b)}
+
+\noindent\textit{Problem statement.} What are the temporal ($\partial\vect u/\partial t$), advective
+($\vect u\cdot(\nabla\vect u)$), and total ($D\vect u/Dt$) accelerations for this flow field? What
+does $\alpha = 1$ imply?
+
+\medskip
+
+\medskip
+\noindent Temporal:
+\begin{equation*}
+\pd{\vect u}{t} = \pd{}{t}\left(\frac{\alpha x}{t}\right)\hat{\vect e}_x
+\;\Rightarrow\;
+\boxed{\pd{\vect u}{t} = -\frac{\alpha x}{t^2}\,\hat{\vect e}_x}
+\end{equation*}
+Advective:
+\begin{equation*}
+\vect u\cdot\nabla\vect u = u_x\pd{u_x}{x}\,\hat{\vect e}_x = \frac{\alpha x}{t}\cdot\frac{\alpha}{t}\,\hat{\vect e}_x
+\;\Rightarrow\;
+\boxed{\vect u\cdot\nabla\vect u = \frac{\alpha^2 x}{t^2}\,\hat{\vect e}_x}
+\end{equation*}
+Total:
+\begin{equation*}
+\frac{D\vect u}{Dt} = \pd{\vect u}{t} + \vect u\cdot\nabla\vect u
+\;\Rightarrow\;
+\boxed{\frac{D\vect u}{Dt} = \frac{\alpha(\alpha-1)\,x}{t^2}\,\hat{\vect e}_x}
+\end{equation*}
+
+\noindent $\alpha = 1$:
+\begin{equation*}
+\pd{\vect u}{t} = -\frac{x}{t^2}\hat{\vect e}_x, \qquad
+\vect u\cdot\nabla\vect u = +\frac{x}{t^2}\hat{\vect e}_x, \qquad
+\boxed{\frac{D\vect u}{Dt} = \vect 0}
+\end{equation*}
+The local and advective accelerations cancel each other out; hence, the flow field is unsteady at every point, but every
+fluid particle moves at \textbf{constant velocity}.
+
+%=======================================================================
+\section*{Problem 4}
+
+\noindent\textbf{Problem statement.} Consider a two-dimensional flow with velocity components given by
+\begin{align*}
+v_1 &= c\,x_1 \\
+v_2 &= -c\,x_2
+\end{align*}
+Find expressions for the vorticity and the strain rate tensor, (i.e. calculate their components)
+
+\medskip
+\noindent Velocity gradient tensor:
+\begin{equation*}
+\pd{v_i}{x_j} =
+\begin{bmatrix}
+\partial v_1/\partial x_1 & \partial v_1/\partial x_2 \\
+\partial v_2/\partial x_1 & \partial v_2/\partial x_2
+\end{bmatrix}
+=
+\begin{bmatrix}
+c & 0 \\
+0 & -c
+\end{bmatrix}
+\end{equation*}
+
+\noindent Vorticity, $\boldsymbol\omega = \nabla\times\vect v$, $\omega_i = \epsilon_{ijk}\,\partial_j v_k$.
+For planar flow ($v_3 = 0$, $\partial/\partial x_3 = 0$), $\omega_1 = \omega_2 = 0$ and
+\begin{equation*}
+\omega_3 = \pd{v_2}{x_1} - \pd{v_1}{x_2} = 0 - 0
+\;\Rightarrow\;
+\boxed{\boldsymbol\omega = (0,\,0,\,0)}
+\end{equation*}
+The flow is irrotational ($R_{ij} = 0$).
+
+\medskip
+\noindent Strain rate tensor, $S_{ij} = \tfrac12\left(\pd{v_i}{x_j} + \pd{v_j}{x_i}\right)$:
+\begin{align*}
+S_{11} &= \pd{v_1}{x_1} = c, \qquad
+S_{22} = \pd{v_2}{x_2} = -c, \qquad
+S_{12} = S_{21} = \tfrac12\left(\pd{v_1}{x_2} + \pd{v_2}{x_1}\right) = 0
+\end{align*}
+\begin{equation*}
+\boxed{S_{ij} =
+\begin{bmatrix}
+c & 0 \\
+0 & -c
+\end{bmatrix}}
+\end{equation*}
+$S_{ii} = c - c = 0$, so I think the flow is simplyy irrotational straining.
+
+%=======================================================================
+\section*{Problem 5}
+
+\noindent\textbf{Problem statement.} Consider a plane Couette flow of a viscous fluid confined between
+two flat plates a distance $b$ apart. At steady state the velocity distribution is $u = Uy/b$ and
+$v = w = 0$, where the upper plate at $y = b$ is moving parallel to itself at speed $U$, and the
+lower plate is held stationary. Find the rates of linear strain, the rate of shear strain, and
+vorticity in the flow.
+
+\medskip
+\noindent The only nonzero velocity gradient is $\partial u/\partial y = U/b$:
+\begin{equation*}
+\pd{u_i}{x_j} =
+\begin{bmatrix}
+0 & U/b & 0 \\
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+
+\noindent Rates of linear strain:
+\begin{equation*}
+\boxed{S_{xx} = \pd{u}{x} = 0, \qquad S_{yy} = \pd{v}{y} = 0, \qquad S_{zz} = \pd{w}{z} = 0}
+\end{equation*}
+
+\noindent Rate of shear strain:
+
+\begin{equation*}
+\boxed{\pd{u}{y} + \pd{v}{x} = 2S_{xy} = \frac{U}{b}}
+\;\Rightarrow\;
+S_{xy} = S_{yx} = \frac{U}{2b}, \qquad S_{xz} = S_{yz} = 0
+\end{equation*}
+\begin{equation*}
+S_{ij} =
+\begin{bmatrix}
+0 & U/(2b) & 0 \\
+U/(2b) & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+
+\noindent Vorticity:
+\begin{equation*}
+\boldsymbol\omega = \nabla\times\vect u
+= \left(\pd{w}{y} - \pd{v}{z}\right)\hat{\vect e}_x
++ \left(\pd{u}{z} - \pd{w}{x}\right)\hat{\vect e}_y
++ \left(\pd{v}{x} - \pd{u}{y}\right)\hat{\vect e}_z
+\;\Rightarrow\;
+\boxed{\boldsymbol\omega = -\frac{U}{b}\,\hat{\vect e}_z}
+\end{equation*}
+
+
+\end{document}
