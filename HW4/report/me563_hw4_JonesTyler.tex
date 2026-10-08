@@ -109,10 +109,8 @@ Fluid leaving through the top carries $x$-momentum $\rho U_0$ per unit volume:
 \begin{gather*}
 F_x = \rho U_0^2 b\delta\left(-1 + \frac38 + \frac{17}{35}\right)
 = \rho U_0^2 b\delta\,\frac{-280 + 105 + 136}{280} \\
-\boxed{F_x = -\frac{39}{280}\,\rho U_0^2\,b\,\delta \approx -0.139\,\rho U_0^2 b\delta}
+\boxed{F_x = -\frac{39}{280}\,\rho U_0^2\,b\,\delta}
 \end{gather*}
-The plate pulls the flow upstream ($-x$) with magnitude $\frac{39}{280}\rho U_0^2 b\delta$. By
-Newton's third law, the drag on the plate is equal and opposite ($+x$).
 
 %=======================================================================
 \section*{Problem 2}
@@ -150,8 +148,6 @@ Substituting $V_2 - V_1 = V_1\left(h_1/h_2 - 1\right)$:
 \begin{equation*}
 \boxed{F = \frac12\rho g b\left(h_1^2 - h_2^2\right) - \rho b h_1 V_1^2\left(\frac{h_1}{h_2} - 1\right)}
 \end{equation*}
-As $V_1 \to 0$ this reduces to the net hydrostatic force. Because the flow accelerates through the
-gate ($V_2 > V_1$), the momentum term lowers the force needed to hold the gate.
 
 %=======================================================================
 \section*{Problem 3}
@@ -202,8 +198,6 @@ Summing over the CS (per unit $b$):
 \begin{equation*}
 \boxed{F_x = -\frac13\,\rho U^2\,b\,L}
 \end{equation*}
-$H$ drops out, as it should. The cylinder exerts a force of $\frac13\rho U^2 bL$ on the flow,
-directed upstream. The drag on the cylinder is equal and opposite ($+x$).
 
 %=======================================================================
 \section*{Problem 4}
@@ -225,12 +219,37 @@ v(x,y,t) &= \phantom{-}A\omega\cos(kx-\omega t)\,\sinh\!\big(k(y+H)\big)/\sinh(k
 
 \noindent\textit{Problem statement.} Is this an incompressible flow?
 
+\medskip
+\noindent A flow is incompressible if $\nabla\cdot\vect u = 0$ everywhere. The flow is two-dimensional
+($w = 0$, no $z$-dependence), so this reduces to
 \begin{equation*}
-\pd{u}{x} = -Ck\cos\theta\,\cosh k(y+H), \qquad
-\pd{v}{y} = Ck\cos\theta\,\cosh k(y+H)
+\nabla\cdot\vect u = \pd{u}{x} + \pd{v}{y} = 0.
 \end{equation*}
+In terms of $\theta$ and $C$, the velocity components are
 \begin{equation*}
-\nabla\cdot\vect u = \pd{u}{x} + \pd{v}{y} = 0
+u = -C\sin\theta\,\cosh k(y+H), \qquad
+v = C\cos\theta\,\sinh k(y+H),
+\end{equation*}
+with $\pd{\theta}{x} = k$ and $\pd{\theta}{y} = 0$.
+
+\medskip
+\noindent $u$ depends on $x$ only through $\theta$, so by the chain rule
+\begin{equation*}
+\pd{u}{x} = -C\cosh k(y+H)\,\frac{d}{d\theta}\big(\sin\theta\big)\,\pd{\theta}{x}
+= -C\cosh k(y+H)\,(\cos\theta)(k)
+= -Ck\cos\theta\,\cosh k(y+H).
+\end{equation*}
+$v$ depends on $y$ only through $\sinh k(y+H)$, and $\frac{d}{dy}\sinh k(y+H) = k\cosh k(y+H)$, so
+\begin{equation*}
+\pd{v}{y} = C\cos\theta\,\frac{d}{dy}\Big(\sinh k(y+H)\Big)
+= C\cos\theta\,\big(k\cosh k(y+H)\big)
+= Ck\cos\theta\,\cosh k(y+H).
+\end{equation*}
+Adding the two terms:
+\begin{equation*}
+\nabla\cdot\vect u
+= -Ck\cos\theta\,\cosh k(y+H) + Ck\cos\theta\,\cosh k(y+H) = 0
+\quad \text{for all } x,\, y,\, t
 \;\Rightarrow\;
 \boxed{\text{Yes, the flow is incompressible.}}
 \end{equation*}
@@ -312,5 +331,14 @@ surface, plotted as displacement scaled by $A$.
   \end{tabular}
 \end{table}
 \noindent The flow is unsteady, so these pathlines are not the instantaneous streamlines.
+
+\appendix
+\section*{Appendix: Code and Handwritten Derivations}
+
+All supporting code/derivations for this homework (pathline integration script, plotting,
+and handwritten derivations) are available in the GitHub repository:
+\begin{center}
+    \url{https://github.com/tjjones6/ME563/tree/main/HW4}
+\end{center}
 
 \end{document}
